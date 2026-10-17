@@ -7,7 +7,8 @@ package engine
 //   2. 组合龙型：组合龙（三花色 147/258/369 各一组、不能错位，计 3 副顺子）
 //      ＋1 副面子＋1 对将（按 2006 竞赛规则问答的通行裁定，可配至多 1 副吃碰杠副子）；
 //   3. 七对（须门清；4 张同值可当两对）；
-//   4. 全不靠（须门清）。
+//   4. 全不靠（须门清）；
+//   5. 十三幺（须门清；WMO 3.7.2 特殊牌型明文）。
 //
 // 引擎枚举全部合法分解交给计分（GX-3）取最优；计分不在本包。
 
@@ -30,10 +31,11 @@ type Set struct {
 type WinShape uint8
 
 const (
-	ShapeStandard   WinShape = iota // 4 副面子＋将
-	ShapeKnitted                    // 组合龙＋1 副面子＋将
-	ShapeSevenPairs                 // 七对
-	ShapeAllSingles                 // 全不靠
+	ShapeStandard        WinShape = iota // 4 副面子＋将
+	ShapeKnitted                         // 组合龙＋1 副面子＋将
+	ShapeSevenPairs                      // 七对
+	ShapeAllSingles                      // 全不靠
+	ShapeThirteenOrphans                 // 十三幺
 )
 
 // WinHand 一次合法的和牌分解。Sets 只含暗牌部分分解出的副子；
@@ -44,6 +46,51 @@ type WinHand struct {
 	Pair    *Tile    `json:"pair,omitempty"`    // 将（七对/全不靠为空）
 	Pairs   []Tile   `json:"pairs,omitempty"`   // 七对的 7 个对子牌
 	Singles []Tile   `json:"singles,omitempty"` // 全不靠的 14 张单牌
+}
+
+// --- 十三幺（须门清） ---
+
+// orphanSlots 十三幺的 13 个牌值槽位：1/9 万、1/9 筒、1/9 条、东南西北、中发白。
+var orphanSlots = [13]int{0, 8, 9, 17, 18, 26, 27, 28, 29, 30, 31, 32, 33}
+
+var orphanSlotSet = func() (b [34]bool) {
+	for _, o := range orphanSlots {
+		b[o] = true
+	}
+	return b
+}()
+
+// thirteenOrphans 判定十三幺：13 种幺九字牌各一、其中恰一种成对（共 14 张），别无他牌。
+func thirteenOrphans(counts [34]int) (bool, WinHand) {
+	pair := -1
+	for _, o := range orphanSlots {
+		switch counts[o] {
+		case 1:
+		case 2:
+			if pair >= 0 {
+				return false, WinHand{} // 两种成对不成十三幺
+			}
+			pair = o
+		default:
+			return false, WinHand{}
+		}
+	}
+	if pair < 0 {
+		return false, WinHand{}
+	}
+	for o, n := range counts {
+		if n > 0 && !orphanSlotSet[o] {
+			return false, WinHand{} // 混入非幺九字牌
+		}
+	}
+	pairTile := tileFromOrd(pair)
+	singles := make([]Tile, 0, 12)
+	for _, o := range orphanSlots {
+		if o != pair {
+			singles = append(singles, tileFromOrd(o))
+		}
+	}
+	return true, WinHand{Shape: ShapeThirteenOrphans, Pair: &pairTile, Singles: singles}
 }
 
 // --- 存在性快查（声明/吃碰抢校验用：只判「能否和」，不枚举分解） ---
@@ -64,6 +111,9 @@ func winExists(tiles []Tile, melds int) bool {
 			return true
 		}
 		if ok, _ := allSingles(counts); ok {
+			return true
+		}
+		if ok, _ := thirteenOrphans(counts); ok {
 			return true
 		}
 	}
@@ -219,6 +269,9 @@ func Decompose(tiles []Tile, melds int) []WinHand {
 			out = append(out, wh)
 		}
 		if ok, wh := allSingles(counts); ok {
+			out = append(out, wh)
+		}
+		if ok, wh := thirteenOrphans(counts); ok {
 			out = append(out, wh)
 		}
 	}

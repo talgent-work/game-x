@@ -19,7 +19,7 @@ type DrawSource uint8
 
 const (
 	DrawNone    DrawSource = iota
-	DrawInitial            // 庄家开局第一张（天和判定用）
+	DrawInitial            // 庄家开局第一张（发牌所得；按自摸类处理的上下文事实）
 	DrawWall               // 普通摸牌（牌头）
 	DrawKong               // 杠后补牌（牌尾，杠上开花判定用）
 )
@@ -114,13 +114,15 @@ type Snapshot struct {
 }
 
 // WinContext 和牌上下文（为 GX-3 计番记录；引擎只记事实，不定番种名）。
+// 注意：国标（98/WMO）81 番种中没有天和、地和——Initial/FirstGoAround 只是
+// 原始事实记录（庄家开局第一张自摸、头一轮无吃碰杠），并非番种判定输入。
 type WinContext struct {
 	Dealer        int  `json:"dealer"`
 	KongBloom     bool `json:"kongBloom"`     // 杠上开花：杠后补牌自摸成和
 	LastTile      bool `json:"lastTile"`      // 妙手回春：自摸牌墙最后一张
 	LastDiscard   bool `json:"lastDiscard"`   // 海底捞月：和牌时牌墙已空
-	Initial       bool `json:"initial"`       // 天和：庄家开局第一张即成和
-	FirstGoAround bool `json:"firstGoAround"` // 头一轮（无吃碰杠且各家至多打过一张），地和判定用
+	Initial       bool `json:"initial"`       // 事实：庄家开局第一张即自摸成和（非天和番种）
+	FirstGoAround bool `json:"firstGoAround"` // 事实：头一轮（无吃碰杠且各家至多打过一张）
 	DiscardCount  int  `json:"discardCount"`
 	MeldCount     int  `json:"meldCount"`
 }
@@ -158,6 +160,7 @@ type Game struct {
 	lastDraw     Tile
 	drawSource   DrawSource
 	canSelfWin   bool // 当前行动者刚摸到牌、可报自摸
+	kongBlocked  bool // 当前行动者本巡吃/碰过而未摸牌：暂不得开杠（WMO 3.6.8 同巡互斥）
 	drewLastTile bool // 最近一次摸牌是牌墙最后一张（妙手回春判定用）
 
 	over   *Result
@@ -212,8 +215,11 @@ func (g *Game) Log() []Event {
 	return out
 }
 
-// ViewFor 生成 seat 可见的快照（唯一对外读取通道）。
+// ViewFor 生成 seat 可见的快照（唯一对外读取通道）。seat 越界返回零值快照。
 func (g *Game) ViewFor(seat int) Snapshot {
+	if seat < 0 || seat >= Seats {
+		return Snapshot{}
+	}
 	snap := Snapshot{
 		Seat:       seat,
 		Phase:      g.phase,
@@ -236,15 +242,13 @@ func (g *Game) ViewFor(seat int) Snapshot {
 	return snap
 }
 
-// copyMeldsFor 拷贝 s 的副子；viewSeat 之外看到的暗杠牌面被抹去。
+// copyMeldsFor 深拷贝 s 的副子；viewSeat 之外看到的暗杠牌面被抹去。
 func (g *Game) copyMeldsFor(s, viewSeat int) []Meld {
 	out := make([]Meld, len(g.melds[s]))
-	copy(out, g.melds[s])
-	if s != viewSeat {
-		for i := range out {
-			if out[i].HideTile() {
-				out[i].Tiles = nil
-			}
+	for i, m := range g.melds[s] {
+		out[i] = cloneMeld(m)
+		if s != viewSeat && out[i].HideTile() {
+			out[i].Tiles = nil
 		}
 	}
 	return out
@@ -252,6 +256,9 @@ func (g *Game) copyMeldsFor(s, viewSeat int) []Meld {
 
 // Actions 列出 seat 当前全部合法动作（驱动 UI 与模拟；空＝无可动作）。
 func (g *Game) Actions(seat int) []Action {
+	if seat < 0 || seat >= Seats {
+		return nil
+	}
 	var acts []Action
 	switch g.phase {
 	case PhaseDiscard:
@@ -267,12 +274,12 @@ func (g *Game) Actions(seat int) []Action {
 			}
 		}
 		for o, n := range counts {
-			if n == 4 && g.wall.remaining() >= 1 {
+			if n == 4 && g.wall.remaining() >= 1 && !g.kongBlocked {
 				acts = append(acts, Action{Kind: ActKongConcealed, Tile: tileFromOrd(o)})
 			}
 		}
 		for _, m := range g.melds[seat] {
-			if m.Kind == MeldPong && counts[m.Tiles[0].ord()] > 0 && g.wall.remaining() >= 1 {
+			if m.Kind == MeldPong && counts[m.Tiles[0].ord()] > 0 && g.wall.remaining() >= 1 && !g.kongBlocked {
 				acts = append(acts, Action{Kind: ActKongPromote, Tile: m.Tiles[0]})
 			}
 		}
@@ -335,8 +342,12 @@ func (g *Game) chiOptions(seat int, pending Tile) []Action {
 // --- 动作提交 ---
 
 // Apply 提交 seat 的动作，校验并推进状态，返回产生的事件。
-// 非法动作返回错误且不改变状态。
+// 非法动作（含座位越界、非法牌值、未知动作种类）返回错误且不改变状态，
+// 任何输入不得引发 panic——权威服务端直连不可信输入。
 func (g *Game) Apply(seat int, act Action) ([]Event, error) {
+	if seat < 0 || seat >= Seats {
+		return nil, fmt.Errorf("座位 %d 越界", seat)
+	}
 	if g.phase == PhaseOver {
 		return nil, fmt.Errorf("对局已结束")
 	}
@@ -395,8 +406,14 @@ func (g *Game) applyKongConcealed(seat int, tile Tile) ([]Event, error) {
 	if seat != g.turn {
 		return nil, fmt.Errorf("还没轮到座位 %d（当前 %d）", seat, g.turn)
 	}
+	if g.kongBlocked {
+		return nil, fmt.Errorf("本巡已吃/碰，须再拿牌后才能开杠（同巡不报杠）")
+	}
 	if g.wall.remaining() < 1 {
 		return nil, fmt.Errorf("牌墙已空，无杠后补牌，不能开杠")
+	}
+	if !tile.Valid() {
+		return nil, fmt.Errorf("非法牌值 %v", tile)
 	}
 	counts := countsOf(g.hands[seat])
 	if counts[tile.ord()] != 4 {
@@ -407,7 +424,7 @@ func (g *Game) applyKongConcealed(seat int, tile Tile) ([]Event, error) {
 	}
 	meld := Meld{Kind: MeldKong, Tiles: []Tile{tile, tile, tile, tile}, From: -1, Kong: KongFromConcealed}
 	g.melds[seat] = append(g.melds[seat], meld)
-	meldCopy := meld
+	meldCopy := cloneMeld(meld)
 	ev := g.emit(Event{Kind: EvMeld, Seat: seat, Meld: &meldCopy})
 	return append([]Event{ev}, g.drawTailFor(seat)...), nil
 }
@@ -419,8 +436,14 @@ func (g *Game) applyKongPromote(seat int, tile Tile) ([]Event, error) {
 	if seat != g.turn {
 		return nil, fmt.Errorf("还没轮到座位 %d（当前 %d）", seat, g.turn)
 	}
+	if g.kongBlocked {
+		return nil, fmt.Errorf("本巡已吃/碰，须再拿牌后才能开杠（同巡不报杠）")
+	}
 	if g.wall.remaining() < 1 {
 		return nil, fmt.Errorf("牌墙已空，无杠后补牌，不能补杠")
+	}
+	if !tile.Valid() {
+		return nil, fmt.Errorf("非法牌值 %v", tile)
 	}
 	// 找到该值的碰刻子。
 	idx := -1
@@ -517,15 +540,18 @@ func (g *Game) applyDeclare(seat int, act Action) ([]Event, error) {
 	return g.maybeResolve(), nil
 }
 
-// validChi 校验：与被吃之牌同花色数牌、三张连续，且两张手牌在手。
+// validChi 校验：与被吃之牌同花色数牌、三张同花色连续，且两张手牌在手。
 func (g *Game) validChi(seat int, pending Tile, with []Tile) bool {
 	if len(with) != 2 || !pending.Numeric() {
 		return false
 	}
 	run := []Tile{with[0], with[1], pending}
 	sortTiles(run)
-	if !run[0].Numeric() || run[0].Suit != pending.Suit {
-		return false
+	// 三张必须同花色（防跨花色/字牌拼「顺」）且数牌连续。
+	for _, t := range run {
+		if !t.Numeric() || t.Suit != pending.Suit {
+			return false
+		}
 	}
 	if run[0].Rank+1 != run[1].Rank || run[1].Rank+1 != run[2].Rank {
 		return false
@@ -656,7 +682,7 @@ func (g *Game) settlePromote() []Event {
 			m.Kind = MeldKong
 			m.Kong = KongFromPromote
 			m.Tiles = append(m.Tiles, tile)
-			meldCopy := *m
+			meldCopy := cloneMeld(*m)
 			events = append(events, g.emit(Event{Kind: EvMeld, Seat: seat, Meld: &meldCopy}))
 			break
 		}
@@ -667,14 +693,16 @@ func (g *Game) settlePromote() []Event {
 }
 
 // settlePong 碰：碰牌离手入刻子，轮碰者打牌（无摸牌）。
+// 吃/碰后未再摸牌前不得开杠（WMO 3.6.8 同巡互斥），置 kongBlocked。
 func (g *Game) settlePong(seat int) []Event {
 	tile := g.pending.Tile
 	g.hands[seat] = removeTile(removeTile(g.hands[seat], tile), tile)
 	g.markDiscardClaimed(g.pending.Seat, tile)
 	meld := Meld{Kind: MeldPong, Tiles: []Tile{tile, tile, tile}, From: g.pending.Seat}
 	g.melds[seat] = append(g.melds[seat], meld)
-	ev := g.emit(Event{Kind: EvMeld, Seat: seat, Meld: &meld})
+	ev := g.emit(Event{Kind: EvMeld, Seat: seat, Meld: meldPtr(cloneMeld(meld))})
 	g.closeWindow(seat)
+	g.kongBlocked = true
 	return []Event{ev}
 }
 
@@ -687,12 +715,13 @@ func (g *Game) settleKongDiscard(seat int) []Event {
 	g.markDiscardClaimed(g.pending.Seat, tile)
 	meld := Meld{Kind: MeldKong, Tiles: []Tile{tile, tile, tile, tile}, From: g.pending.Seat, Kong: KongFromDiscard}
 	g.melds[seat] = append(g.melds[seat], meld)
-	ev := g.emit(Event{Kind: EvMeld, Seat: seat, Meld: &meld})
+	ev := g.emit(Event{Kind: EvMeld, Seat: seat, Meld: meldPtr(cloneMeld(meld))})
 	g.closeWindow(seat)
 	return append([]Event{ev}, g.drawTailFor(seat)...)
 }
 
 // settleChi 吃：两张手牌＋所吃之牌成顺子，轮吃者打牌（无摸牌）。
+// 吃/碰后未再摸牌前不得开杠（WMO 3.6.8 同巡互斥），置 kongBlocked。
 func (g *Game) settleChi(seat int, with []Tile) []Event {
 	tile := g.pending.Tile
 	g.hands[seat] = removeTile(removeTile(g.hands[seat], with[0]), with[1])
@@ -701,8 +730,9 @@ func (g *Game) settleChi(seat int, with []Tile) []Event {
 	sortTiles(run)
 	meld := Meld{Kind: MeldChi, Tiles: run, From: g.pending.Seat}
 	g.melds[seat] = append(g.melds[seat], meld)
-	ev := g.emit(Event{Kind: EvMeld, Seat: seat, Meld: &meld})
+	ev := g.emit(Event{Kind: EvMeld, Seat: seat, Meld: meldPtr(cloneMeld(meld))})
 	g.closeWindow(seat)
+	g.kongBlocked = true
 	return []Event{ev}
 }
 
@@ -728,6 +758,7 @@ func (g *Game) advanceTurn() []Event {
 	g.lastDraw = t
 	g.drawSource = DrawWall
 	g.canSelfWin = true
+	g.kongBlocked = false // 摸牌后同巡开杠限制解除
 	g.drewLastTile = g.wall.remaining() == 0
 	tileCopy := t
 	return []Event{g.emit(Event{Kind: EvDrawn, Seat: next, Tile: &tileCopy, Source: DrawWall})}
@@ -740,6 +771,7 @@ func (g *Game) drawTailFor(seat int) []Event {
 	g.lastDraw = t
 	g.drawSource = DrawKong
 	g.canSelfWin = true
+	g.kongBlocked = false // 补牌即「再拿牌」，解除同巡开杠限制
 	g.drewLastTile = g.wall.remaining() == 0
 	tileCopy := t
 	return []Event{g.emit(Event{Kind: EvDrawn, Seat: seat, Tile: &tileCopy, Source: DrawKong})}
@@ -788,7 +820,7 @@ func (g *Game) finishWin(winner int, tile Tile, source WinSource, feeder int) {
 	ctx := WinContext{
 		Dealer:       g.dealer,
 		LastDiscard:  source == WinByDiscard && g.wall.remaining() == 0,
-		Initial:      source == WinSelfDrawn && g.drawSource == DrawInitial,
+		Initial:      source == WinSelfDrawn && g.drawSource == DrawInitial, // 事实记录，非天和番种
 		KongBloom:    source == WinSelfDrawn && g.drawSource == DrawKong,
 		LastTile:     source == WinSelfDrawn && g.drewLastTile,
 		DiscardCount: discardCount,
@@ -803,11 +835,11 @@ func (g *Game) finishWin(winner int, tile Tile, source WinSource, feeder int) {
 		Feeder:         feeder,
 		Decompositions: Decompose(winnerHand, len(g.melds[winner])),
 		WinnerHand:     winnerHand,
-		WinnerMelds:    append([]Meld(nil), g.melds[winner]...),
+		WinnerMelds:    cloneMelds(g.melds[winner]),
 	}
 	for s := 0; s < Seats; s++ {
 		g.over.Hands[s] = append([]Tile(nil), g.hands[s]...)
-		g.over.Melds[s] = append([]Meld(nil), g.melds[s]...)
+		g.over.Melds[s] = cloneMelds(g.melds[s])
 	}
 	g.over.Context = ctx
 	g.phase = PhaseOver
@@ -836,7 +868,7 @@ func (g *Game) finishExhaustive() {
 	}
 	for s := 0; s < Seats; s++ {
 		g.over.Hands[s] = append([]Tile(nil), g.hands[s]...)
-		g.over.Melds[s] = append([]Meld(nil), g.melds[s]...)
+		g.over.Melds[s] = cloneMelds(g.melds[s])
 	}
 	g.phase = PhaseOver
 }

@@ -254,9 +254,9 @@ func validateResult(t *testing.T, g *Game, seed int64) {
 				sets++
 			}
 		}
-		if wh.Shape == ShapeSevenPairs || wh.Shape == ShapeAllSingles {
+		if wh.Shape == ShapeSevenPairs || wh.Shape == ShapeAllSingles || wh.Shape == ShapeThirteenOrphans {
 			if len(r.WinnerMelds) != 0 {
-				t.Fatalf("种子 %d：七对/全不靠须门清", seed)
+				t.Fatalf("种子 %d：七对/全不靠/十三幺须门清", seed)
 			}
 			continue
 		}

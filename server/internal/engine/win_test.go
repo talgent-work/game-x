@@ -172,5 +172,44 @@ func TestDecomposeInvalid(t *testing.T) {
 	}
 }
 
+func TestDecomposeThirteenOrphans(t *testing.T) {
+	// 十三幺：13 种幺九字牌各一＋恰一种成对。
+	hand := tiles(
+		wan(1), wan(9), tong(1), tong(9), tiao(1), tiao(9),
+		feng(1), feng(2), feng(3), feng(4), jian(1), jian(2), jian(3), wan(1),
+	)
+	whs := Decompose(hand, 0)
+	if len(whs) != 1 || whs[0].Shape != ShapeThirteenOrphans {
+		t.Fatalf("十三幺应唯一分解，实得 %v", whs)
+	}
+	if whs[0].Pair == nil || *whs[0].Pair != wan(1) || len(whs[0].Singles) != 12 {
+		t.Fatalf("十三幺将应为 1万、单牌 12 张，实得 %+v", whs[0])
+	}
+	// 13 张单张（未成对）不成和牌型。
+	noPair := tiles(
+		wan(1), wan(9), tong(1), tong(9), tiao(1), tiao(9),
+		feng(1), feng(2), feng(3), feng(4), jian(1), jian(2), jian(3),
+	)
+	if whs := Decompose(append(append([]Tile(nil), noPair...), wan(1)), 0); len(whs) == 0 {
+		t.Fatal("缺一张补成对的十三幺应可和")
+	}
+	// 两种成对不成。
+	twoPairs := tiles(
+		wan(1), wan(1), wan(9), wan(9), tong(1), tong(9), tiao(1), tiao(9),
+		feng(1), feng(2), feng(3), feng(4), jian(1), jian(2),
+	)
+	if whs := Decompose(twoPairs, 0); len(whs) != 0 {
+		t.Fatalf("两种成对应不成十三幺，实得 %v", whs)
+	}
+	// 混入非幺九牌不成。
+	mixed := tiles(
+		wan(1), wan(9), tong(1), tong(9), tiao(1), tiao(9),
+		feng(1), feng(2), feng(3), feng(4), jian(1), jian(2), jian(3), wan(5),
+	)
+	if whs := Decompose(mixed, 0); len(whs) != 0 {
+		t.Fatalf("混入中张不应成和，实得 %v", whs)
+	}
+}
+
 func feng(r uint8) Tile { return Tile{Suit: SuitFeng, Rank: r} }
 func jian(r uint8) Tile { return Tile{Suit: SuitJian, Rank: r} }

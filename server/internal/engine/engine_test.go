@@ -519,7 +519,7 @@ func TestExhaustive(t *testing.T) {
 	applyErr(t, g, 0, Action{Kind: ActDiscard, Tile: wan(1)}) // 终局后拒动作
 }
 
-// 天和：庄家开局第一张即成和牌型。
+// 庄家开局第一张即成和牌型：按自摸类处理（WMO 无天和番种，Initial 仅事实记录）。
 func TestInitialWin(t *testing.T) {
 	hands := [Seats][]Tile{
 		{wan(1), wan(2), wan(3), wan(4), wan(5), wan(6), wan(7), wan(8), wan(9), tong(1), tong(2), tong(3), tiao(1), tiao(1)},
@@ -531,7 +531,55 @@ func TestInitialWin(t *testing.T) {
 	g.drawSource = DrawInitial
 	applyOk(t, g, 0, Action{Kind: ActWin})
 	if !g.Over() || g.Result().Source != WinSelfDrawn || !g.Result().Context.Initial {
-		t.Fatalf("庄家开局和应记为天和上下文，实得 %+v", g.Result())
+		t.Fatalf("庄家开局和应按自摸处理并记 Initial 事实，实得 %+v", g.Result())
+	}
+}
+
+// WMO 3.6.8：吃、碰牌的同巡不得开杠，再拿牌（摸牌/杠补牌）后才能开杠。
+func TestKongBlockedAfterChiOrPong(t *testing.T) {
+	// 座位 0 打 5万；座位 1 碰（手中另有 9筒 四张可暗杠）。
+	hands := [Seats][]Tile{
+		{wan(5), wan(1), wan(1), wan(6), wan(6), tong(1), tong(2), tong(3), tiao(1), tiao(2), tiao(3), tiao(4), tiao(5), tong(9)},
+		{wan(5), wan(5), tong(9), tong(9), tong(9), tong(9), wan(1), wan(2), wan(3), wan(7), wan(8), wan(9), tiao(1)},
+		{wan(4), wan(4), wan(4), wan(2), wan(3), wan(4), tong(4), tong(5), tong(6), tiao(9), tiao(9), tiao(9), tong(7)},
+		{wan(6), wan(7), wan(8), tong(5), tong(6), tong(7), tong(8), tong(9), tiao(4), tiao(5), tiao(6), tiao(7), tiao(8)},
+	}
+	g := fixedGame(hands, bigWall(), 0)
+	applyOk(t, g, 0, Action{Kind: ActDiscard, Tile: wan(5)})
+	applyOk(t, g, 1, Action{Kind: ActPong})
+	if g.Phase() != PhaseDiscard || g.Turn() != 1 {
+		t.Fatalf("碰后应轮到座位 1 打牌")
+	}
+	// 手中有 9筒 四张，但本巡碰过：暗杠被拒，动作清单也不应列出。
+	applyErr(t, g, 1, Action{Kind: ActKongConcealed, Tile: tong(9)})
+	for _, a := range g.Actions(1) {
+		if a.Kind == ActKongConcealed || a.Kind == ActKongPromote {
+			t.Fatalf("同巡吃碰后不应列出开杠动作：%v", a)
+		}
+	}
+	// 打出一张、其余各家打牌后，座位 1 再摸牌：开杠解禁。
+	mustDiscard(t, g, 1, tiao(1))
+	for s := 2; s <= 3; s++ {
+		tile := g.hands[s][0]
+		mustDiscard(t, g, s, tile)
+	}
+	tile := g.hands[0][0]
+	mustDiscard(t, g, 0, tile)
+	if g.Turn() != 1 || !g.canSelfWin {
+		t.Fatalf("应轮到座位 1 摸牌，实得 turn=%d", g.Turn())
+	}
+	found := false
+	for _, a := range g.Actions(1) {
+		if a.Kind == ActKongConcealed && a.Tile == tong(9) {
+			found = true
+		}
+	}
+	if !found {
+		t.Fatalf("再拿牌后应可暗杠 9筒，动作=%v", g.Actions(1))
+	}
+	applyOk(t, g, 1, Action{Kind: ActKongConcealed, Tile: tong(9)})
+	if m := g.ViewFor(1).Melds[1]; len(m) != 2 || m[1].Kind != MeldKong {
+		t.Fatalf("暗杠应落定，实得 %+v", m)
 	}
 }
 
@@ -608,6 +656,37 @@ func TestSnapshotJSON(t *testing.T) {
 		if _, err := json.Marshal(g.Result()); err != nil {
 			t.Fatalf("终局结果序列化失败：%v", err)
 		}
+	}
+}
+
+// Snapshot 输出不得与引擎状态共享可变存储：调用方改快照不得污染引擎。
+func TestSnapshotNoAliasing(t *testing.T) {
+	hands := [Seats][]Tile{
+		{wan(5), wan(1), wan(1), wan(2), wan(3), tong(1), tong(2), tong(3), tiao(1), tiao(2), tiao(3), tiao(4), tiao(5), tong(9)},
+		{wan(5), wan(5), wan(9), wan(9), tong(1), tong(2), tong(3), tiao(1), tiao(2), tiao(3), tiao(4), tong(7), tong(8)},
+		{wan(9), wan(9), wan(2), wan(3), wan(4), tong(1), tong(2), tong(3), tiao(5), tiao(5), tiao(5), tong(9), tiao(9)},
+		{wan(6), wan(7), wan(8), tong(1), tong(2), tong(3), tiao(1), tiao(2), tiao(3), tong(4), tong(4), tong(4), tiao(9)},
+	}
+	g := fixedGame(hands, bigWall(), 0)
+	applyOk(t, g, 0, Action{Kind: ActDiscard, Tile: wan(5)})
+	applyOk(t, g, 1, Action{Kind: ActPong})
+	snap := g.ViewFor(2)
+	snap.Melds[1][0].Tiles[0] = wan(9) // 调用方改动快照
+	if got := g.melds[1][0].Tiles[0]; got != wan(5) {
+		t.Fatalf("快照副子与引擎状态混用：引擎碰刻被改为 %v", got)
+	}
+	snap.Hand[0] = Tile{Suit: SuitFeng, Rank: 1}
+	if got := g.hands[2][0]; got.Suit == SuitFeng {
+		t.Fatalf("快照手牌与引擎状态混用")
+	}
+	// 事件与终局结果中的副子同样独立。
+	for _, ev := range g.Log() {
+		if ev.Meld != nil {
+			ev.Meld.Tiles[0] = wan(9)
+		}
+	}
+	if got := g.melds[1][0].Tiles[0]; got != wan(5) {
+		t.Fatalf("事件副子与引擎状态混用：被改为 %v", got)
 	}
 }
 
