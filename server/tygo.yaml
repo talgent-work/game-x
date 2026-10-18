@@ -1,0 +1,25 @@
+# tygo 配置（GX-4）：Go 结构体 → TypeScript 类型。
+#
+# 说明：本文件放在 server/（Go module 根）而非仓库根——tygo 以 Go 包解析为输入，
+# 需要在 module 上下文内运行（`cd server && go run github.com/gzuidhof/tygo@v0.2.21 generate`）。
+# 与 GX-1 §5.1 的「tygo.yaml 在仓库根」有一处落位差异，原因在此，交付说明中记录。
+# 跨包引用：protocol 引用的 engine 类型映射为对 engine.ts 的具名引用（同目录生成）。
+# 键用源码里的限定名（tygo 以 ast.SelectorExpr 的 t.X 为包名，不是 import 路径）。
+type_mappings:
+  "engine.Tile": "Tile"
+  "engine.Snapshot": "Snapshot"
+  "engine.Meld": "Meld"
+  "engine.Result": "Result"
+
+packages:
+  - path: "talgent-work/game-x/server/internal/engine"
+    output_path: "../client/src/protocol/engine.ts"
+    frontmatter: |
+      // 由 tygo 从 server/internal/engine 生成——勿手改。
+      // 重新生成：cd server && go run github.com/gzuidhof/tygo@v0.2.21 generate
+  - path: "talgent-work/game-x/server/internal/protocol"
+    output_path: "../client/src/protocol/protocol.ts"
+    frontmatter: |
+      // 由 tygo 从 server/internal/protocol 生成——勿手改。
+      // 重新生成：cd server && go run github.com/gzuidhof/tygo@v0.2.21 generate
+      import type { Tile, Snapshot, Meld, Result } from "./engine";
