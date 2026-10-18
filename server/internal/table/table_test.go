@@ -279,6 +279,9 @@ func TestFullGameByActions(t *testing.T) {
 		if len(st.Actions) != 0 {
 			t.Fatalf("座位 %d 终局后 actions 应为空", c.seat)
 		}
+		if st.Score == nil {
+			t.Fatalf("座位 %d 终局 state 应携带 GX-3 计分", c.seat)
+		}
 		assertNoLeak(t, c)
 	}
 
@@ -288,6 +291,16 @@ func TestFullGameByActions(t *testing.T) {
 	d := tb.Dump()
 	if len(d.Actions) == 0 || len(d.Events) == 0 || d.Result == nil {
 		t.Fatal("Dump 应含动作、事件与结果")
+	}
+	if d.Score == nil {
+		t.Fatal("Dump 应含 GX-3 计分")
+	}
+	sum := 0
+	for _, v := range d.Score.Settlement.Deltas {
+		sum += v
+	}
+	if sum != 0 {
+		t.Fatalf("四家得失分应零和，得 %d", sum)
 	}
 }
 

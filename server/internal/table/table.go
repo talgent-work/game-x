@@ -23,6 +23,7 @@ import (
 
 	"talgent-work/game-x/server/internal/engine"
 	"talgent-work/game-x/server/internal/protocol"
+	"talgent-work/game-x/server/internal/score"
 )
 
 // ErrConnDetached 连接已分离（Detach/挂断/关卡后 Handle 的唯一错误）。
@@ -54,11 +55,12 @@ type ActionRecord struct {
 // Dump 一局的完整记录（服务端视角，含隐藏信息与终局全揭示）。
 // 供 --dump 落盘、复现与规则核对；绝不可下发客户端。
 type Dump struct {
-	Seed    int64            `json:"seed"`
-	Dealer  int              `json:"dealer"`
-	Actions []ActionRecord   `json:"actions"`
-	Events  []protocol.Event `json:"events"` // 引擎事件原文（不按可见性过滤）
-	Result  *engine.Result   `json:"result,omitempty"`
+	Seed    int64              `json:"seed"`
+	Dealer  int                `json:"dealer"`
+	Actions []ActionRecord     `json:"actions"`
+	Events  []protocol.Event   `json:"events"` // 引擎事件原文（不按可见性过滤）
+	Result  *engine.Result     `json:"result,omitempty"`
+	Score   *score.ScoreResult `json:"score,omitempty"` // GX-3 计分与结算（东风圈常量）：番种清单/总番/四家得分
 }
 
 // Conn 一条座位连接的句柄：表创建，运输层消费其出站通道。
@@ -92,6 +94,7 @@ type Table struct {
 	seat    [engine.Seats]*Conn
 	history []ActionRecord
 	over    bool
+	score   *score.ScoreResult // 终局计分与结算（GX-3），终局前为 nil
 }
 
 type cmdKind uint8
@@ -221,6 +224,7 @@ func (t *Table) Dump() Dump {
 		Actions: acts,
 		Events:  wire,
 		Result:  t.game.Result(),
+		Score:   t.score,
 	}
 }
 
@@ -335,6 +339,11 @@ func (t *Table) action(c *Conn, m protocol.Msg) {
 		return
 	}
 	t.record(seat, *m.Action, "")
+	if t.game.Over() {
+		// 终局：先计分（GX-3；圈风为跨局概念，本 Cycle 用东风圈常量），随终局 state 下发
+		s := score.Score(t.game.Result(), score.Context{RoundWind: 1})
+		t.score = &s
+	}
 	t.fanout(events)
 	if t.game.Over() {
 		t.finish()
@@ -419,7 +428,11 @@ func (t *Table) sendState(c *Conn) {
 	for _, a := range acts {
 		wire = append(wire, protocol.FromEngine(a))
 	}
-	t.send(c, protocol.StateMsg(snap, wire))
+	msg := protocol.StateMsg(snap, wire)
+	if t.score != nil {
+		msg.State.Score = t.score
+	}
+	t.send(c, msg)
 }
 
 // normalizeSnapshot 线上不出现 null 数组：空的 discards 一律 []。
