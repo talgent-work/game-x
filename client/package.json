@@ -1,0 +1,53 @@
+{
+  "name": "game-x-client",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Game X 本地对局原型（GX-4）：Electron 客户端（PixiJS 牌桌 + DOM 界面）",
+  "type": "module",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "gen:protocol": "cd ../server && go run github.com/gzuidhof/tygo@v0.2.21 generate",
+    "build:server": "node scripts/build-server.mjs",
+    "build:renderer": "vite build",
+    "build:electron": "tsc -p tsconfig.electron.json && node scripts/copy-preload.mjs",
+    "build": "npm run build:server && npm run build:renderer && npm run build:electron",
+    "start": "npm run build && electron .",
+    "e2e": "node e2e/full-game.mjs",
+    "smoke": "npx vite build --ssr e2e/client-smoke.ts --outDir dist-smoke --emptyOutDir --logLevel warn && node dist-smoke/client-smoke.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.e2e.json --noEmit",
+    "dist:win": "npm run build && electron-builder --win --x64"
+  },
+  "dependencies": {
+    "pixi.js": "8.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "electron": "44.9.0",
+    "electron-builder": "26.17.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.4"
+  },
+  "build": {
+    "appId": "work.talgent.gamex.prototype",
+    "productName": "GameX-LocalPrototype",
+    "directories": {
+      "output": "dist-pkg"
+    },
+    "files": [
+      "dist/**",
+      "dist-electron/**",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "resources/server/gameserver-win.exe",
+        "to": "server/gameserver.exe"
+      }
+    ],
+    "win": {
+      "target": [
+        "zip"
+      ]
+    }
+  }
+}

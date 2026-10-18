@@ -1,0 +1,16 @@
+/* GX-4 本地原型：最简占位样式（本 Cycle 不做美术） */
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #12331f; color: #e8f0e8; font-family: "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; }
+#app { display: flex; height: 100vh; }
+#board { flex: 1 1 auto; position: relative; }
+#side { width: 320px; padding: 12px; display: flex; flex-direction: column; gap: 10px; background: #0c2416; border-left: 1px solid #2c5a3c; }
+#info { font-size: 14px; line-height: 1.7; white-space: pre-wrap; }
+#buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+#buttons button { padding: 8px 14px; font-size: 15px; border: 1px solid #4f8a63; border-radius: 6px; background: #1d4a2e; color: #e8f0e8; cursor: pointer; }
+#buttons button:hover { background: #2a6a42; }
+#log { flex: 1 1 auto; overflow-y: auto; font-size: 12px; color: #9fc0a8; line-height: 1.6; }
+#settle { position: absolute; inset: 0; background: rgba(4, 16, 9, 0.88); padding: 24px 32px; overflow-y: auto; font-size: 14px; line-height: 1.8; }
+#settle h2 { margin: 0 0 8px; font-size: 20px; }
+#settle .fan-slot { margin-top: 12px; padding: 10px 12px; border: 1px dashed #5c8a6d; border-radius: 6px; color: #9fc0a8; font-size: 13px; }
+#settle pre { white-space: pre-wrap; font-size: 13px; color: #cfe4d4; }
+.hidden { display: none !important; }

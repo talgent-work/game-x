@@ -34,3 +34,10 @@ go.work.sum
 
 # Node
 node_modules/
+
+# GX-4 客户端构建产物与内嵌服务端二进制（由 npm run build 产出；Windows 包由 npm run dist:win 产出）
+client/dist/
+client/dist-electron/
+client/dist-smoke/
+client/dist-pkg/
+client/resources/server/
