@@ -15,7 +15,7 @@ type Context struct {
 
 // ScoreResult 一局计分与结算的完整结果（JSON 形状供 GX-4 协议层复用）。
 type ScoreResult struct {
-	Exhaustive bool // 流局（引擎 Result.Exhaustive）
+	Exhaustive bool `json:"exhaustive"` // 流局（引擎 Result.Exhaustive）
 	// Best 取最优后的计分：胜者全部合法分解中番数最大者。
 	Best struct {
 		Fans  []FanHit `json:"fans"`

@@ -1,6 +1,7 @@
 // SeatView：把协议消息折叠成「可渲染模型」——界面只读模型、只发意图，不含任何规则判定。
 import type { Action, Event, Msg, State } from "./protocol/protocol";
 import type { Result, Snapshot } from "./protocol/engine";
+import type { ScoreResult } from "./protocol/score";
 
 export function tileLabel(t: { suit: number; rank: number }): string {
   if (t.suit === 3) return ["东", "南", "西", "北"][t.rank - 1] ?? "?";
@@ -10,6 +11,16 @@ export function tileLabel(t: { suit: number; rank: number }): string {
 
 export function statePhaseText(phase: number): string {
   return ["等待打牌", "等待声明", "终局"][phase] ?? "?";
+}
+
+// 座位风：庄家东、下家南、对家西、上家北（引擎口径）。
+export function windText(dealer: number, seat: number): string {
+  return ["东", "南", "西", "北"][(seat - dealer + 4) % 4] ?? "?";
+}
+
+// 结算方式（score.PayoutKind）。
+export function payoutText(kind: string): string {
+  return ({ discard: "点炮（含抢杠）", selfDraw: "自摸", exhaustive: "流局" } as Record<string, string>)[kind] ?? kind;
 }
 
 export function shapeText(shape: number): string {
@@ -43,6 +54,10 @@ export class SeatView {
 
   actions(): Action[] {
     return this.state?.actions ?? [];
+  }
+
+  score(): ScoreResult | null {
+    return this.state?.score ?? null;
   }
 
   canDiscard(t: { suit: number; rank: number }): boolean {

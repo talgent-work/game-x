@@ -7,7 +7,10 @@
 //   - rejected 的 reason 是中文人话，直接展示，客户端不得解析（演进以加字段为主）。
 package protocol
 
-import "talgent-work/game-x/server/internal/engine"
+import (
+	"talgent-work/game-x/server/internal/engine"
+	"talgent-work/game-x/server/internal/score"
+)
 
 // Version 协议版本；hello 必须携带且相等，否则拒绝并挂断。
 const Version = 1
@@ -87,8 +90,9 @@ type Action struct {
 // State 某座位可见的完整局面与该座位当前全部合法动作。
 // 构造函数保证 Actions 恒为数组（空为 []，不为 null）。
 type State struct {
-	Snapshot engine.Snapshot `json:"snapshot"`
-	Actions  []Action        `json:"actions"`
+	Snapshot engine.Snapshot    `json:"snapshot"`
+	Actions  []Action           `json:"actions"`
+	Score    *score.ScoreResult `json:"score,omitempty"` // 终局（和牌/流局）state 携带 GX-3 计分与结算（东风圈常量）
 }
 
 // Event 引擎事件的「某座位可见形状」。
