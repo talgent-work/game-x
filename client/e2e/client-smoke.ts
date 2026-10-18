@@ -143,14 +143,22 @@ async function main(): Promise<void> {
     // 与服务端 --dump 完整记录互证
     for (let i = 0; i < 50 && !existsSync(dumpPath); i++) await sleep(100);
     if (!existsSync(dumpPath)) throw new Error("未找到 dump 文件");
-    const dump = JSON.parse(readFileSync(dumpPath, "utf8")) as { result?: Result };
+    const dump = JSON.parse(readFileSync(dumpPath, "utf8")) as {
+      result?: Result;
+      score?: { best: { total: number }; settlement: { deltas: number[] } };
+    };
     const outcome = result.exhaustive ? "流局" : `座位 ${result.winner} 和牌`;
     const serverOutcome = dump.result?.exhaustive ? "流局" : `座位 ${dump.result?.winner} 和牌`;
     if (outcome !== serverOutcome) {
       throw new Error(`客户端观察（${outcome}）与服务端 dump（${serverOutcome}）不一致`);
     }
+    if (!dump.score) throw new Error("dump.score 缺失（GX-3 计分）");
+    const deltaSum = dump.score.settlement.deltas.reduce((a, b) => a + b, 0);
+    if (deltaSum !== 0) throw new Error(`四家得失分应零和，得 ${deltaSum}`);
 
-    console.log(`客户端模块 headless 冒烟通过：种子 ${seed}｜${outcome}｜客户端观察与服务端 dump 一致`);
+    console.log(
+      `客户端模块 headless 冒烟通过：种子 ${seed}｜${outcome}｜计分 ${dump.score.best.total} 番｜客户端观察与服务端 dump 一致`,
+    );
     console.log("（真实模块：net.SeatConnection / game.SeatView / autoplay.chooseAuto；座位 0 事件末 6 条：）");
     console.log(seats[0].view.log.slice(-6).join("\n"));
     clearTimeout(bail);

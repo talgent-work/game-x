@@ -172,8 +172,12 @@ try {
   if (!Array.isArray(dump.events) || dump.events.length === 0) throw new Error("dump.events 为空");
   if (!dump.result) throw new Error("dump.result 缺失");
   if (dump.seed !== seed) throw new Error(`dump.seed 不符：${dump.seed}`);
+  if (!dump.score) throw new Error("dump.score 缺失（GX-3 计分）");
+  const deltaSum = dump.score.settlement.deltas.reduce((a, b) => a + b, 0);
+  if (deltaSum !== 0) throw new Error(`四家得失分应零和，得 ${deltaSum}`);
   const rejected = dump.actions.filter((a) => a.error).length;
   const outcome = dump.result.exhaustive ? "流局" : `座位 ${dump.result.winner} 和牌`;
+  const scoreTxt = dump.result.exhaustive ? "流局零和" : `${dump.score.best.total} 番（${dump.score.eligible ? "达起和线" : "未达起和线"}）`;
   const sameResult = Boolean(endEvent?.exhaustive) === Boolean(dump.result.exhaustive);
 
   if (process.env.GX_E2E_KEEP === "1") {
@@ -185,7 +189,7 @@ try {
   }
 
   console.log(
-    `E2E 通过：种子 ${seed}（确定性）｜动作 ${dump.actions.length} 步（其中被拒 ${rejected}）｜事件 ${dump.events.length} 条｜结果：${outcome}`,
+    `E2E 通过：种子 ${seed}（确定性）｜动作 ${dump.actions.length} 步（其中被拒 ${rejected}）｜事件 ${dump.events.length} 条｜结果：${outcome}｜计分：${scoreTxt}`,
   );
   console.log(`终局结果一致：${sameResult ? "是" : "否（客户端观察与服务端 dump 不一致，请检查）"}`);
   console.log(`dump：${dumpPath}`);

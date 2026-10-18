@@ -39,7 +39,7 @@ async function boot(): Promise<void> {
       } else if (m.type === "state" && m.state && m.state.actions.length > 0) {
         // 自动座：从服务器给的合法动作里挑一条（与 E2E、与引擎随机模拟同一逻辑）
         const pick = chooseAuto(m.state.actions, rng);
-        if (pick) setTimeout(() => conn.send({ type: "action", action: pick }), 120);
+        if (pick) setTimeout(() => conn.send({ type: "action", action: pick }), 90);
       }
     });
   }
