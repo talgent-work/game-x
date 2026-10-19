@@ -1,0 +1,3282 @@
+{
+  "seed": 6,
+  "dealer": 0,
+  "actions": [
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 7
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 2
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "chi",
+        "with": [
+          {
+            "suit": 0,
+            "rank": 1
+          },
+          {
+            "suit": 0,
+            "rank": 3
+          }
+        ]
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 8
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 5
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 1
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "pong"
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 8
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "chi",
+        "with": [
+          {
+            "suit": 0,
+            "rank": 7
+          },
+          {
+            "suit": 0,
+            "rank": 9
+          }
+        ]
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 2
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 3
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 5
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "chi",
+        "with": [
+          {
+            "suit": 2,
+            "rank": 6
+          },
+          {
+            "suit": 2,
+            "rank": 7
+          }
+        ]
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 5
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 2
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 4,
+          "rank": 1
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "kongDiscard"
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 9
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 3,
+          "rank": 4
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 3,
+          "rank": 1
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 4,
+          "rank": 2
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 4,
+          "rank": 2
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 3,
+          "rank": 2
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 6
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 3
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 7
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 7
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 4,
+          "rank": 2
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 9
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 5
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 1
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 3,
+          "rank": 3
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 1
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 4,
+          "rank": 3
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 8
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 5
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 6
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 4
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 3,
+          "rank": 1
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 4
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 7
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 7
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 6
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 2
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 1
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 1
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 3
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 6
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 1
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 2
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 3
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 4,
+          "rank": 3
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 1
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 3
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 5
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 5
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 9
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 6
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 4,
+          "rank": 3
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 5
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 8
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 8
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "pong"
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 3,
+          "rank": 1
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 8
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 7
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 9
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "kongDiscard"
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 2
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 3
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "chi",
+        "with": [
+          {
+            "suit": 1,
+            "rank": 2
+          },
+          {
+            "suit": 1,
+            "rank": 4
+          }
+        ]
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 3
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 0,
+          "rank": 5
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 3
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 2
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "chi",
+        "with": [
+          {
+            "suit": 2,
+            "rank": 1
+          },
+          {
+            "suit": 2,
+            "rank": 3
+          }
+        ]
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 7
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 3,
+          "rank": 4
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 9
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "pass"
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 2,
+          "rank": 6
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 5
+        }
+      }
+    },
+    {
+      "seat": 1,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 4
+        }
+      }
+    },
+    {
+      "seat": 2,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 6
+        }
+      }
+    },
+    {
+      "seat": 3,
+      "action": {
+        "kind": "discard",
+        "tile": {
+          "suit": 1,
+          "rank": 4
+        }
+      }
+    },
+    {
+      "seat": 0,
+      "action": {
+        "kind": "win"
+      }
+    }
+  ],
+  "events": [
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 7
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 1,
+        "rank": 5
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 0,
+        "rank": 2
+      }
+    },
+    {
+      "kind": "meld",
+      "seat": 2,
+      "meld": {
+        "kind": 0,
+        "tiles": [
+          {
+            "suit": 0,
+            "rank": 1
+          },
+          {
+            "suit": 0,
+            "rank": 2
+          },
+          {
+            "suit": 0,
+            "rank": 3
+          }
+        ],
+        "from": 1,
+        "kong": 0
+      }
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 0,
+        "rank": 8
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 0,
+        "rank": 6
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 1,
+        "rank": 5
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 2,
+        "rank": 2
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 0,
+        "rank": 1
+      }
+    },
+    {
+      "kind": "meld",
+      "seat": 3,
+      "meld": {
+        "kind": 1,
+        "tiles": [
+          {
+            "suit": 0,
+            "rank": 1
+          },
+          {
+            "suit": 0,
+            "rank": 1
+          },
+          {
+            "suit": 0,
+            "rank": 1
+          }
+        ],
+        "from": 0,
+        "kong": 0
+      }
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 0,
+        "rank": 8
+      }
+    },
+    {
+      "kind": "meld",
+      "seat": 0,
+      "meld": {
+        "kind": 0,
+        "tiles": [
+          {
+            "suit": 0,
+            "rank": 7
+          },
+          {
+            "suit": 0,
+            "rank": 8
+          },
+          {
+            "suit": 0,
+            "rank": 9
+          }
+        ],
+        "from": 3,
+        "kong": 0
+      }
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 2,
+        "rank": 2
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 3,
+        "rank": 1
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 0,
+        "rank": 3
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 0,
+        "rank": 6
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 2,
+        "rank": 5
+      }
+    },
+    {
+      "kind": "meld",
+      "seat": 3,
+      "meld": {
+        "kind": 0,
+        "tiles": [
+          {
+            "suit": 2,
+            "rank": 5
+          },
+          {
+            "suit": 2,
+            "rank": 6
+          },
+          {
+            "suit": 2,
+            "rank": 7
+          }
+        ],
+        "from": 2,
+        "kong": 0
+      }
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 2,
+        "rank": 5
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 2,
+        "rank": 9
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 2,
+        "rank": 2
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 1,
+        "rank": 9
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 4,
+        "rank": 1
+      }
+    },
+    {
+      "kind": "meld",
+      "seat": 0,
+      "meld": {
+        "kind": 2,
+        "tiles": [
+          {
+            "suit": 4,
+            "rank": 1
+          },
+          {
+            "suit": 4,
+            "rank": 1
+          },
+          {
+            "suit": 4,
+            "rank": 1
+          },
+          {
+            "suit": 4,
+            "rank": 1
+          }
+        ],
+        "from": 1,
+        "kong": 0
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 4
+      },
+      "source": "kong"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 2,
+        "rank": 9
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 0,
+        "rank": 2
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 3,
+        "rank": 4
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 0,
+        "rank": 4
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 3,
+        "rank": 1
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 2,
+        "rank": 1
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 4,
+        "rank": 2
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 0,
+        "rank": 7
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 4,
+        "rank": 2
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 0,
+        "rank": 5
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 3,
+        "rank": 2
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 3,
+        "rank": 1
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 0,
+        "rank": 6
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 3,
+        "rank": 4
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 1,
+        "rank": 3
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 4,
+        "rank": 3
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 0,
+        "rank": 7
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 4,
+        "rank": 3
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 0,
+        "rank": 7
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 1,
+        "rank": 9
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 4,
+        "rank": 2
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 1,
+        "rank": 1
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 0,
+        "rank": 9
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 5
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 5
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 1,
+        "rank": 3
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 2,
+        "rank": 1
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 2,
+        "rank": 9
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 3,
+        "rank": 3
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 2,
+        "rank": 1
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 2,
+        "rank": 1
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 2,
+        "rank": 7
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 4,
+        "rank": 3
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 3,
+        "rank": 2
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 2,
+        "rank": 8
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 2,
+        "rank": 3
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 2,
+        "rank": 5
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 1,
+        "rank": 8
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 0,
+        "rank": 6
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 0,
+        "rank": 7
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 2,
+        "rank": 4
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 2,
+        "rank": 7
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 3,
+        "rank": 1
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 2,
+        "rank": 5
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 0,
+        "rank": 4
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 1,
+        "rank": 7
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 1,
+        "rank": 7
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 2,
+        "rank": 1
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 0,
+        "rank": 7
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 4,
+        "rank": 3
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 2,
+        "rank": 6
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 1,
+        "rank": 6
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 0,
+        "rank": 2
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 0,
+        "rank": 8
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 1,
+        "rank": 1
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 1
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 1
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 1,
+        "rank": 4
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 1,
+        "rank": 3
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 1,
+        "rank": 2
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 1,
+        "rank": 6
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 3,
+        "rank": 3
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 1,
+        "rank": 1
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 0,
+        "rank": 3
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 2
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 1,
+        "rank": 2
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 1,
+        "rank": 3
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 1,
+        "rank": 8
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 4,
+        "rank": 3
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 2,
+        "rank": 2
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 2,
+        "rank": 1
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 8
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 0,
+        "rank": 3
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 3,
+        "rank": 4
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 1,
+        "rank": 5
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 1,
+        "rank": 8
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 2,
+        "rank": 5
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 0,
+        "rank": 9
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 0,
+        "rank": 9
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 0,
+        "rank": 4
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 0,
+        "rank": 6
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 3,
+        "rank": 1
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 4,
+        "rank": 3
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 0,
+        "rank": 5
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 0,
+        "rank": 5
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 2,
+        "rank": 7
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 0,
+        "rank": 8
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 7
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 8
+      }
+    },
+    {
+      "kind": "meld",
+      "seat": 2,
+      "meld": {
+        "kind": 1,
+        "tiles": [
+          {
+            "suit": 1,
+            "rank": 8
+          },
+          {
+            "suit": 1,
+            "rank": 8
+          },
+          {
+            "suit": 1,
+            "rank": 8
+          }
+        ],
+        "from": 0,
+        "kong": 0
+      }
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 3,
+        "rank": 1
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 2,
+        "rank": 8
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 1,
+        "rank": 8
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 2
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 7
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 2,
+        "rank": 8
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 1,
+        "rank": 9
+      }
+    },
+    {
+      "kind": "meld",
+      "seat": 2,
+      "meld": {
+        "kind": 2,
+        "tiles": [
+          {
+            "suit": 1,
+            "rank": 9
+          },
+          {
+            "suit": 1,
+            "rank": 9
+          },
+          {
+            "suit": 1,
+            "rank": 9
+          },
+          {
+            "suit": 1,
+            "rank": 9
+          }
+        ],
+        "from": 1,
+        "kong": 0
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 3,
+        "rank": 2
+      },
+      "source": "kong"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 1,
+        "rank": 2
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 1,
+        "rank": 3
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 1,
+        "rank": 3
+      }
+    },
+    {
+      "kind": "meld",
+      "seat": 0,
+      "meld": {
+        "kind": 0,
+        "tiles": [
+          {
+            "suit": 1,
+            "rank": 2
+          },
+          {
+            "suit": 1,
+            "rank": 3
+          },
+          {
+            "suit": 1,
+            "rank": 4
+          }
+        ],
+        "from": 3,
+        "kong": 0
+      }
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 0,
+        "rank": 3
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 2,
+        "rank": 2
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 0,
+        "rank": 5
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 0,
+        "rank": 5
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 2,
+        "rank": 3
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 1,
+        "rank": 4
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 2,
+        "rank": 2
+      }
+    },
+    {
+      "kind": "meld",
+      "seat": 0,
+      "meld": {
+        "kind": 0,
+        "tiles": [
+          {
+            "suit": 2,
+            "rank": 1
+          },
+          {
+            "suit": 2,
+            "rank": 2
+          },
+          {
+            "suit": 2,
+            "rank": 3
+          }
+        ],
+        "from": 3,
+        "kong": 0
+      }
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 2,
+        "rank": 7
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 0,
+        "rank": 6
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 3,
+        "rank": 4
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 1,
+        "rank": 6
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 2,
+        "rank": 9
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 2,
+        "rank": 6
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 2,
+        "rank": 6
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 5
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 0,
+      "tile": {
+        "suit": 1,
+        "rank": 5
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 1,
+      "tile": {
+        "suit": 1,
+        "rank": 6
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 1,
+      "tile": {
+        "suit": 1,
+        "rank": 4
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 2,
+      "tile": {
+        "suit": 1,
+        "rank": 7
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 2,
+      "tile": {
+        "suit": 1,
+        "rank": 6
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 3,
+      "tile": {
+        "suit": 3,
+        "rank": 3
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "discarded",
+      "seat": 3,
+      "tile": {
+        "suit": 1,
+        "rank": 4
+      }
+    },
+    {
+      "kind": "drawn",
+      "seat": 0,
+      "tile": {
+        "suit": 0,
+        "rank": 4
+      },
+      "source": "wall"
+    },
+    {
+      "kind": "win",
+      "seat": 0,
+      "result": {
+        "exhaustive": false,
+        "winner": 0,
+        "winningTile": {
+          "suit": 0,
+          "rank": 4
+        },
+        "source": 0,
+        "feeder": -1,
+        "decompositions": [
+          {
+            "shape": 0,
+            "pair": {
+              "suit": 0,
+              "rank": 4
+            }
+          }
+        ],
+        "winnerHand": [
+          {
+            "suit": 0,
+            "rank": 4
+          },
+          {
+            "suit": 0,
+            "rank": 4
+          }
+        ],
+        "winnerMelds": [
+          {
+            "kind": 0,
+            "tiles": [
+              {
+                "suit": 0,
+                "rank": 7
+              },
+              {
+                "suit": 0,
+                "rank": 8
+              },
+              {
+                "suit": 0,
+                "rank": 9
+              }
+            ],
+            "from": 3,
+            "kong": 0
+          },
+          {
+            "kind": 2,
+            "tiles": [
+              {
+                "suit": 4,
+                "rank": 1
+              },
+              {
+                "suit": 4,
+                "rank": 1
+              },
+              {
+                "suit": 4,
+                "rank": 1
+              },
+              {
+                "suit": 4,
+                "rank": 1
+              }
+            ],
+            "from": 1,
+            "kong": 0
+          },
+          {
+            "kind": 0,
+            "tiles": [
+              {
+                "suit": 1,
+                "rank": 2
+              },
+              {
+                "suit": 1,
+                "rank": 3
+              },
+              {
+                "suit": 1,
+                "rank": 4
+              }
+            ],
+            "from": 3,
+            "kong": 0
+          },
+          {
+            "kind": 0,
+            "tiles": [
+              {
+                "suit": 2,
+                "rank": 1
+              },
+              {
+                "suit": 2,
+                "rank": 2
+              },
+              {
+                "suit": 2,
+                "rank": 3
+              }
+            ],
+            "from": 3,
+            "kong": 0
+          }
+        ],
+        "hands": [
+          [
+            {
+              "suit": 0,
+              "rank": 4
+            },
+            {
+              "suit": 0,
+              "rank": 4
+            }
+          ],
+          [
+            {
+              "suit": 0,
+              "rank": 2
+            },
+            {
+              "suit": 0,
+              "rank": 6
+            },
+            {
+              "suit": 0,
+              "rank": 9
+            },
+            {
+              "suit": 1,
+              "rank": 2
+            },
+            {
+              "suit": 1,
+              "rank": 6
+            },
+            {
+              "suit": 2,
+              "rank": 2
+            },
+            {
+              "suit": 2,
+              "rank": 3
+            },
+            {
+              "suit": 2,
+              "rank": 7
+            },
+            {
+              "suit": 2,
+              "rank": 8
+            },
+            {
+              "suit": 2,
+              "rank": 8
+            },
+            {
+              "suit": 3,
+              "rank": 1
+            },
+            {
+              "suit": 3,
+              "rank": 2
+            },
+            {
+              "suit": 4,
+              "rank": 3
+            }
+          ],
+          [
+            {
+              "suit": 0,
+              "rank": 5
+            },
+            {
+              "suit": 1,
+              "rank": 4
+            },
+            {
+              "suit": 1,
+              "rank": 7
+            },
+            {
+              "suit": 3,
+              "rank": 2
+            }
+          ],
+          [
+            {
+              "suit": 0,
+              "rank": 5
+            },
+            {
+              "suit": 2,
+              "rank": 7
+            },
+            {
+              "suit": 2,
+              "rank": 8
+            },
+            {
+              "suit": 3,
+              "rank": 2
+            },
+            {
+              "suit": 3,
+              "rank": 3
+            },
+            {
+              "suit": 3,
+              "rank": 3
+            },
+            {
+              "suit": 3,
+              "rank": 4
+            }
+          ]
+        ],
+        "melds": [
+          [
+            {
+              "kind": 0,
+              "tiles": [
+                {
+                  "suit": 0,
+                  "rank": 7
+                },
+                {
+                  "suit": 0,
+                  "rank": 8
+                },
+                {
+                  "suit": 0,
+                  "rank": 9
+                }
+              ],
+              "from": 3,
+              "kong": 0
+            },
+            {
+              "kind": 2,
+              "tiles": [
+                {
+                  "suit": 4,
+                  "rank": 1
+                },
+                {
+                  "suit": 4,
+                  "rank": 1
+                },
+                {
+                  "suit": 4,
+                  "rank": 1
+                },
+                {
+                  "suit": 4,
+                  "rank": 1
+                }
+              ],
+              "from": 1,
+              "kong": 0
+            },
+            {
+              "kind": 0,
+              "tiles": [
+                {
+                  "suit": 1,
+                  "rank": 2
+                },
+                {
+                  "suit": 1,
+                  "rank": 3
+                },
+                {
+                  "suit": 1,
+                  "rank": 4
+                }
+              ],
+              "from": 3,
+              "kong": 0
+            },
+            {
+              "kind": 0,
+              "tiles": [
+                {
+                  "suit": 2,
+                  "rank": 1
+                },
+                {
+                  "suit": 2,
+                  "rank": 2
+                },
+                {
+                  "suit": 2,
+                  "rank": 3
+                }
+              ],
+              "from": 3,
+              "kong": 0
+            }
+          ],
+          null,
+          [
+            {
+              "kind": 0,
+              "tiles": [
+                {
+                  "suit": 0,
+                  "rank": 1
+                },
+                {
+                  "suit": 0,
+                  "rank": 2
+                },
+                {
+                  "suit": 0,
+                  "rank": 3
+                }
+              ],
+              "from": 1,
+              "kong": 0
+            },
+            {
+              "kind": 1,
+              "tiles": [
+                {
+                  "suit": 1,
+                  "rank": 8
+                },
+                {
+                  "suit": 1,
+                  "rank": 8
+                },
+                {
+                  "suit": 1,
+                  "rank": 8
+                }
+              ],
+              "from": 0,
+              "kong": 0
+            },
+            {
+              "kind": 2,
+              "tiles": [
+                {
+                  "suit": 1,
+                  "rank": 9
+                },
+                {
+                  "suit": 1,
+                  "rank": 9
+                },
+                {
+                  "suit": 1,
+                  "rank": 9
+                },
+                {
+                  "suit": 1,
+                  "rank": 9
+                }
+              ],
+              "from": 1,
+              "kong": 0
+            }
+          ],
+          [
+            {
+              "kind": 1,
+              "tiles": [
+                {
+                  "suit": 0,
+                  "rank": 1
+                },
+                {
+                  "suit": 0,
+                  "rank": 1
+                },
+                {
+                  "suit": 0,
+                  "rank": 1
+                }
+              ],
+              "from": 0,
+              "kong": 0
+            },
+            {
+              "kind": 0,
+              "tiles": [
+                {
+                  "suit": 2,
+                  "rank": 5
+                },
+                {
+                  "suit": 2,
+                  "rank": 6
+                },
+                {
+                  "suit": 2,
+                  "rank": 7
+                }
+              ],
+              "from": 2,
+              "kong": 0
+            }
+          ]
+        ],
+        "context": {
+          "dealer": 0,
+          "kongBloom": false,
+          "lastTile": false,
+          "lastDiscard": false,
+          "initial": false,
+          "firstGoAround": false,
+          "discardCount": 75,
+          "meldCount": 9
+        }
+      }
+    }
+  ],
+  "result": {
+    "exhaustive": false,
+    "winner": 0,
+    "winningTile": {
+      "suit": 0,
+      "rank": 4
+    },
+    "source": 0,
+    "feeder": -1,
+    "decompositions": [
+      {
+        "shape": 0,
+        "pair": {
+          "suit": 0,
+          "rank": 4
+        }
+      }
+    ],
+    "winnerHand": [
+      {
+        "suit": 0,
+        "rank": 4
+      },
+      {
+        "suit": 0,
+        "rank": 4
+      }
+    ],
+    "winnerMelds": [
+      {
+        "kind": 0,
+        "tiles": [
+          {
+            "suit": 0,
+            "rank": 7
+          },
+          {
+            "suit": 0,
+            "rank": 8
+          },
+          {
+            "suit": 0,
+            "rank": 9
+          }
+        ],
+        "from": 3,
+        "kong": 0
+      },
+      {
+        "kind": 2,
+        "tiles": [
+          {
+            "suit": 4,
+            "rank": 1
+          },
+          {
+            "suit": 4,
+            "rank": 1
+          },
+          {
+            "suit": 4,
+            "rank": 1
+          },
+          {
+            "suit": 4,
+            "rank": 1
+          }
+        ],
+        "from": 1,
+        "kong": 0
+      },
+      {
+        "kind": 0,
+        "tiles": [
+          {
+            "suit": 1,
+            "rank": 2
+          },
+          {
+            "suit": 1,
+            "rank": 3
+          },
+          {
+            "suit": 1,
+            "rank": 4
+          }
+        ],
+        "from": 3,
+        "kong": 0
+      },
+      {
+        "kind": 0,
+        "tiles": [
+          {
+            "suit": 2,
+            "rank": 1
+          },
+          {
+            "suit": 2,
+            "rank": 2
+          },
+          {
+            "suit": 2,
+            "rank": 3
+          }
+        ],
+        "from": 3,
+        "kong": 0
+      }
+    ],
+    "hands": [
+      [
+        {
+          "suit": 0,
+          "rank": 4
+        },
+        {
+          "suit": 0,
+          "rank": 4
+        }
+      ],
+      [
+        {
+          "suit": 0,
+          "rank": 2
+        },
+        {
+          "suit": 0,
+          "rank": 6
+        },
+        {
+          "suit": 0,
+          "rank": 9
+        },
+        {
+          "suit": 1,
+          "rank": 2
+        },
+        {
+          "suit": 1,
+          "rank": 6
+        },
+        {
+          "suit": 2,
+          "rank": 2
+        },
+        {
+          "suit": 2,
+          "rank": 3
+        },
+        {
+          "suit": 2,
+          "rank": 7
+        },
+        {
+          "suit": 2,
+          "rank": 8
+        },
+        {
+          "suit": 2,
+          "rank": 8
+        },
+        {
+          "suit": 3,
+          "rank": 1
+        },
+        {
+          "suit": 3,
+          "rank": 2
+        },
+        {
+          "suit": 4,
+          "rank": 3
+        }
+      ],
+      [
+        {
+          "suit": 0,
+          "rank": 5
+        },
+        {
+          "suit": 1,
+          "rank": 4
+        },
+        {
+          "suit": 1,
+          "rank": 7
+        },
+        {
+          "suit": 3,
+          "rank": 2
+        }
+      ],
+      [
+        {
+          "suit": 0,
+          "rank": 5
+        },
+        {
+          "suit": 2,
+          "rank": 7
+        },
+        {
+          "suit": 2,
+          "rank": 8
+        },
+        {
+          "suit": 3,
+          "rank": 2
+        },
+        {
+          "suit": 3,
+          "rank": 3
+        },
+        {
+          "suit": 3,
+          "rank": 3
+        },
+        {
+          "suit": 3,
+          "rank": 4
+        }
+      ]
+    ],
+    "melds": [
+      [
+        {
+          "kind": 0,
+          "tiles": [
+            {
+              "suit": 0,
+              "rank": 7
+            },
+            {
+              "suit": 0,
+              "rank": 8
+            },
+            {
+              "suit": 0,
+              "rank": 9
+            }
+          ],
+          "from": 3,
+          "kong": 0
+        },
+        {
+          "kind": 2,
+          "tiles": [
+            {
+              "suit": 4,
+              "rank": 1
+            },
+            {
+              "suit": 4,
+              "rank": 1
+            },
+            {
+              "suit": 4,
+              "rank": 1
+            },
+            {
+              "suit": 4,
+              "rank": 1
+            }
+          ],
+          "from": 1,
+          "kong": 0
+        },
+        {
+          "kind": 0,
+          "tiles": [
+            {
+              "suit": 1,
+              "rank": 2
+            },
+            {
+              "suit": 1,
+              "rank": 3
+            },
+            {
+              "suit": 1,
+              "rank": 4
+            }
+          ],
+          "from": 3,
+          "kong": 0
+        },
+        {
+          "kind": 0,
+          "tiles": [
+            {
+              "suit": 2,
+              "rank": 1
+            },
+            {
+              "suit": 2,
+              "rank": 2
+            },
+            {
+              "suit": 2,
+              "rank": 3
+            }
+          ],
+          "from": 3,
+          "kong": 0
+        }
+      ],
+      null,
+      [
+        {
+          "kind": 0,
+          "tiles": [
+            {
+              "suit": 0,
+              "rank": 1
+            },
+            {
+              "suit": 0,
+              "rank": 2
+            },
+            {
+              "suit": 0,
+              "rank": 3
+            }
+          ],
+          "from": 1,
+          "kong": 0
+        },
+        {
+          "kind": 1,
+          "tiles": [
+            {
+              "suit": 1,
+              "rank": 8
+            },
+            {
+              "suit": 1,
+              "rank": 8
+            },
+            {
+              "suit": 1,
+              "rank": 8
+            }
+          ],
+          "from": 0,
+          "kong": 0
+        },
+        {
+          "kind": 2,
+          "tiles": [
+            {
+              "suit": 1,
+              "rank": 9
+            },
+            {
+              "suit": 1,
+              "rank": 9
+            },
+            {
+              "suit": 1,
+              "rank": 9
+            },
+            {
+              "suit": 1,
+              "rank": 9
+            }
+          ],
+          "from": 1,
+          "kong": 0
+        }
+      ],
+      [
+        {
+          "kind": 1,
+          "tiles": [
+            {
+              "suit": 0,
+              "rank": 1
+            },
+            {
+              "suit": 0,
+              "rank": 1
+            },
+            {
+              "suit": 0,
+              "rank": 1
+            }
+          ],
+          "from": 0,
+          "kong": 0
+        },
+        {
+          "kind": 0,
+          "tiles": [
+            {
+              "suit": 2,
+              "rank": 5
+            },
+            {
+              "suit": 2,
+              "rank": 6
+            },
+            {
+              "suit": 2,
+              "rank": 7
+            }
+          ],
+          "from": 2,
+          "kong": 0
+        }
+      ]
+    ],
+    "context": {
+      "dealer": 0,
+      "kongBloom": false,
+      "lastTile": false,
+      "lastDiscard": false,
+      "initial": false,
+      "firstGoAround": false,
+      "discardCount": 75,
+      "meldCount": 9
+    }
+  },
+  "score": {
+    "exhaustive": false,
+    "best": {
+      "fans": [
+        {
+          "kind": "箭刻",
+          "count": 1,
+          "value": 2
+        },
+        {
+          "kind": "明杠",
+          "count": 1,
+          "value": 1
+        },
+        {
+          "kind": "幺九刻",
+          "count": 1,
+          "value": 1
+        },
+        {
+          "kind": "自摸",
+          "count": 1,
+          "value": 1
+        },
+        {
+          "kind": "单钓将",
+          "count": 1,
+          "value": 1
+        }
+      ],
+      "total": 6
+    },
+    "eligible": false,
+    "settlement": {
+      "winner": 0,
+      "kind": "selfDraw",
+      "feeder": -1,
+      "fanScore": 6,
+      "base": 8,
+      "deltas": [
+        42,
+        -14,
+        -14,
+        -14
+      ]
+    }
+  }
+}
