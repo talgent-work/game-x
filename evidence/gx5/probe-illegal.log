@@ -1,0 +1,14 @@
+PASS 未入座即发动作被拒（not_bound）｜code=not_bound reason=请先发送 hello 绑定座位｜连接保持
+PASS hello 版本非 1 被拒（bad_version）｜code=bad_version reason=协议版本不符：需要 1，收到 0｜连接保持
+PASS 座位 9 被拒（bad_seat）｜code=bad_seat reason=座位号非法（hello 需携带 seat 0..3）｜连接保持
+PASS 抢占已占座位被拒（seat_taken）｜code=seat_taken reason=座位 0 已被其他连接占用｜连接保持
+PASS 已绑定连接重复 hello 被拒｜code=already_bound reason=本连接已绑定座位｜连接保持
+PASS 非本座行动被拒（illegal_action）｜code=illegal_action reason=还没轮到座位 1（当前 0）｜连接保持
+PASS 弃手中没有的牌被拒｜code=illegal_action reason=手牌中没有 北｜连接保持
+PASS 无声明窗口时吃被拒｜code=illegal_action reason=当前不在声明窗口｜连接保持
+PASS 未知动作 kind 被拒｜code=bad_action reason=未知动作 "explode"｜连接保持
+PASS 未知消息类型被拒（unknown_type）｜code=unknown_type reason=未知消息类型 blahblah｜连接保持
+PASS 畸形 JSON 被拒（bad_json）｜code=bad_json reason=无效 JSON｜连接保持
+PASS 拒绝后合法动作照常推进（状态未损）｜拒绝后庄家打牌成功，收到新 state
+
+== 探测 12 项：通过 12，失败 0 ==
