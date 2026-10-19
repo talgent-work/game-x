@@ -432,8 +432,8 @@ var excludes = map[FanKind][]FanKind{
 	AllPungs:          {AllChows},
 	HalfFlush:         {NoHonors},
 	MixedShiftedChows: {ShortStraight, AllChows},
-	AllTypes:          {AllTypes}, // 反向：五门齐出现时排除；此处亦排
-	MeldedHand:        {},
+	AllTypes:          {AllTypes},   // 反向：五门齐出现时排除；此处亦排
+	MeldedHand:        {SingleWait}, // 98「全求人……不计单钓（将）」
 	TwoDragons:        {DragonPung},
 	MeldedKongs:       {MeldedKong},
 
