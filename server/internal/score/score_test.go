@@ -251,10 +251,10 @@ func TestFanTable(t *testing.T) {
 		},
 		{
 			name:    "全大",
-			tiles:   []engine.Tile{w(7), w(8), w(9), s(7), s(7), s(7), o(9), o(9), o(9), o(8), o(8), o(8), o(9), o(9)},
-			winning: o(9),
-			want:    map[FanKind]int{UpperTiles: 1, ThreeConcealedPungs: 1, FullyConcealedHand: 1, ConcealedHand: 1, PungOfTerminalsOrHons: 1, SelfDrawn: 1},
-			wantSum: 48,
+			tiles:   []engine.Tile{w(7), w(8), w(9), s(7), s(7), s(7), o(9), o(9), o(9), o(8), o(8), o(8), w(9), w(9)},
+			winning: w(9),
+			want:    map[FanKind]int{UpperTiles: 1, ThreeConcealedPungs: 1, FullyConcealedHand: 1, ConcealedHand: 1, PungOfTerminalsOrHons: 1, SelfDrawn: 1, SingleWait: 1},
+			wantSum: 49,
 		},
 		{
 			name:    "全小",
@@ -311,15 +311,15 @@ func TestFanTable(t *testing.T) {
 			name:    "大于五",
 			tiles:   []engine.Tile{w(6), w(7), w(8), o(6), o(7), o(8), s(7), s(8), s(9), o(9), o(9), o(9), s(9), s(9)},
 			winning: s(9),
-			want:    map[FanKind]int{UpperFour: 1, FullyConcealedHand: 1, ConcealedHand: 1, PungOfTerminalsOrHons: 1, SelfDrawn: 1},
-			wantSum: 20,
+			want:    map[FanKind]int{UpperFour: 1, FullyConcealedHand: 1, ConcealedHand: 1, PungOfTerminalsOrHons: 1, SelfDrawn: 1, SingleWait: 1},
+			wantSum: 21,
 		},
 		{
 			name:    "小于五",
 			tiles:   []engine.Tile{w(1), w(2), w(3), o(1), o(2), o(3), s(2), s(3), s(4), o(4), o(4), o(4), s(4), s(4)},
 			winning: s(4),
-			want:    map[FanKind]int{LowerFour: 1, FullyConcealedHand: 1, ConcealedHand: 1, SelfDrawn: 1},
-			wantSum: 19,
+			want:    map[FanKind]int{LowerFour: 1, FullyConcealedHand: 1, ConcealedHand: 1, SelfDrawn: 1, SingleWait: 1},
+			wantSum: 20,
 		},
 		{
 			name:    "组合龙",
@@ -425,9 +425,9 @@ func TestFanTable(t *testing.T) {
 				meldedPong(j(1)),
 			},
 			winning: o(5),
-			feeder:  1,
-			want:    map[FanKind]int{MeldedHand: 1, DragonPung: 1, PungOfTerminalsOrHons: 1, SelfDrawn: 1, SingleWait: 1},
-			wantSum: 11,
+			source:  engine.WinSelfDrawn,
+			want:    map[FanKind]int{MeldedHand: 0, DragonPung: 1, PungOfTerminalsOrHons: 1, SelfDrawn: 1, SingleWait: 1},
+			wantSum: 5,
 		},
 		{
 			name:    "双箭刻",
@@ -581,6 +581,31 @@ func TestFanTable(t *testing.T) {
 			feeder:  1,
 			want:    map[FanKind]int{FullyConcealedHand: 1, AllChows: 1, AllSimples: 1, ConcealedHand: 1, NoHonors: 1, SelfDrawn: 1, SingleWait: 1},
 			wantSum: 13,
+		},
+		{
+			name:  "全求人（点和）",
+			tiles: []engine.Tile{o(5), o(5)},
+			melds: []engine.Meld{
+				meldedChi(w(1), w(2), w(3)),
+				meldedChi(o(1), o(2), o(3)),
+				meldedPong(s(7)),
+				meldedPong(j(1)),
+			},
+			winning: o(5),
+			source:  disc,
+			feeder:  1,
+			want:    map[FanKind]int{MeldedHand: 1, DragonPung: 1, PungOfTerminalsOrHons: 1, SingleWait: 0}, // 98「不计单钓」
+			wantSum: 9,
+		},
+		{
+			name:    "单钓将×明组同牌（R3 回归）",
+			tiles:   []engine.Tile{o(5), o(5), s(1), s(2), s(3), s(4), s(5), s(6), w(2), w(3), w(4)},
+			melds:   []engine.Meld{meldedChi(o(3), o(4), o(5))}, // 明组 345 筒含一张 5 筒
+			winning: o(5),
+			source:  disc,
+			feeder:  1,
+			want:    map[FanKind]int{SingleWait: 1, MixedShiftedChows: 1, NoHonors: 1},
+			wantSum: 8,
 		},
 	}
 

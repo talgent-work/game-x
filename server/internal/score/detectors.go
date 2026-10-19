@@ -161,7 +161,9 @@ func fanHits(fe features) []FanHit {
 			add(FullyConcealedHand, true)
 		}
 	}
-	add(MeldedHand, allMelded(fe))
+	// 全求人：98「全靠吃牌、碰牌、单钓别人打出的牌和牌」——和牌张须来自他人
+	// （点炮/抢杠和）；自摸成和不计全求人。
+	add(MeldedHand, allMelded(fe) && fe.res.Source != engine.WinSelfDrawn)
 	add(SelfDrawn, fe.res.Source == engine.WinSelfDrawn)
 
 	// --- 和牌方式上下文 ---
@@ -883,10 +885,10 @@ func lastOfKind(fe features) bool {
 
 // waitKind 听牌型：坎张/边张/单钓将（至多一条，符合不重复原则）。空串表示未命中。
 //
-// 口径：胡牌张若可成为某顺子（暗）的中张/边端，计坎张/边张——即使同时也可作将；
-// 仅当胡牌张只以将位参与（全牌中恰两张、不在任何面子中）时计单钓将。
-// 注：98「单钓将」条对「单钓成和」的精确听牌学定义（如两面听不拆等）以实际分解为
-// 准，细微差别记录于 docs/score-rules.md。
+// 口径（98 番种表）：「单钓将：钓单张牌作将成和（缺将牌）」——胡牌张若可成为某
+// 顺子（暗）的中张/边端，计坎张/边张；否则以将位参与（与将同值）即计单钓将。
+// 单钓按暗牌形状判定：同一牌值在明组（他人弃牌所成副子）或另副面子中另有出现
+// 不影响本条（各为不同实体牌；混入立牌摆放等摆法差异见 docs/score-rules.md 已知偏差）。
 func waitKind(fe features) FanKind {
 	o := fe.winOrd
 	// 坎张：胡牌张为某顺子（暗）的中张。
@@ -903,8 +905,8 @@ func waitKind(fe features) FanKind {
 			return EdgeWait
 		}
 	}
-	// 单钓：胡牌张恰为将，且全牌中不另有他处用（full 中恰 2 张、均属将）。
-	if fe.dec.Pair != nil && ordOfTile(*fe.dec.Pair) == o && fe.full[o] == 2 {
+	// 单钓：胡牌张以将位参与（钓单张作将成和）。
+	if fe.dec.Pair != nil && ordOfTile(*fe.dec.Pair) == o {
 		return SingleWait
 	}
 	return ""
