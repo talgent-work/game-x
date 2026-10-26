@@ -5,7 +5,7 @@
 // 种子 → 动作序列 → 终局结果 完全可复现（同一命令多次运行结果一致）。
 // 复现：npm run e2e [种子]
 import { spawn } from "node:child_process";
-import { mkdtempSync, readFileSync, existsSync, copyFileSync, mkdirSync } from "node:fs";
+import { mkdtempSync, readFileSync, copyFileSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
@@ -163,11 +163,17 @@ try {
 
   if (!endEvent) throw new Error("一局未在步数上限内收束");
 
-  // 等 dump 落盘（终局后在服务端收尾流程里写出）
-  for (let i = 0; i < 50 && !existsSync(dumpPath); i++) await sleep(100);
-  if (!existsSync(dumpPath)) throw new Error(`未找到 dump 文件：${dumpPath}`);
-
-  const dump = JSON.parse(readFileSync(dumpPath, "utf8"));
+  // 等 dump 落盘并可解析：服务端以「临时文件 + rename」原子写出；
+  // 消费侧判据＝「可解析」而非「存在」——GX-5 E1 修复配套
+  let dump = null;
+  for (let i = 0; i < 100 && !dump; i++) {
+    try {
+      dump = JSON.parse(readFileSync(dumpPath, "utf8"));
+    } catch {
+      await sleep(100);
+    }
+  }
+  if (!dump) throw new Error(`未读到可解析的 dump：${dumpPath}`);
   if (!Array.isArray(dump.actions) || dump.actions.length === 0) throw new Error("dump.actions 为空");
   if (!Array.isArray(dump.events) || dump.events.length === 0) throw new Error("dump.events 为空");
   if (!dump.result) throw new Error("dump.result 缺失");

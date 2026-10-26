@@ -4,7 +4,7 @@
 //
 // 运行：npm run smoke [种子]（需先 npm run build:server）
 import { spawn } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync } from "node:fs";
+import { mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -140,13 +140,19 @@ async function main(): Promise<void> {
     }
     if (!result) throw new Error("一局未在步数上限内收束");
 
-    // 与服务端 --dump 完整记录互证
-    for (let i = 0; i < 50 && !existsSync(dumpPath); i++) await sleep(100);
-    if (!existsSync(dumpPath)) throw new Error("未找到 dump 文件");
-    const dump = JSON.parse(readFileSync(dumpPath, "utf8")) as {
+    // 与服务端 --dump 完整记录互证：等待「可解析」而非「存在」——GX-5 E1 修复配套
+    let dump: {
       result?: Result;
       score?: { best: { total: number }; settlement: { deltas: number[] } };
-    };
+    } | null = null;
+    for (let i = 0; i < 100 && !dump; i++) {
+      try {
+        dump = JSON.parse(readFileSync(dumpPath, "utf8")) as NonNullable<typeof dump>;
+      } catch {
+        await sleep(100);
+      }
+    }
+    if (!dump) throw new Error(`未读到可解析的 dump：${dumpPath}`);
     const outcome = result.exhaustive ? "流局" : `座位 ${result.winner} 和牌`;
     const serverOutcome = dump.result?.exhaustive ? "流局" : `座位 ${dump.result?.winner} 和牌`;
     if (outcome !== serverOutcome) {
