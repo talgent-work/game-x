@@ -2,6 +2,8 @@
 // 由 tygo 从 server/internal/protocol 生成——勿手改。
 // 重新生成：cd server && go run github.com/gzuidhof/tygo@v0.2.21 generate
 import type { Tile, Snapshot, Meld, Result } from "./engine";
+import type { ScoreResult } from "./score";
+
 //////////
 // source: protocol.go
 /*
@@ -175,6 +177,7 @@ export interface Action {
 export interface State {
   snapshot: Snapshot;
   actions: Action[];
+  score?: ScoreResult; // 终局（和牌/流局）state 携带 GX-3 计分与结算（东风圈常量）
 }
 /**
  * Event 引擎事件的「某座位可见形状」。

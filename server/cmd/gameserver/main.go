@@ -97,7 +97,13 @@ func writeDump(path string, tb *table.Table) error {
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(path, b, 0o644)
+	// 原子写：先写同目录临时文件，再 rename 落盘。
+	// 消费方不会在「文件已存在但内容未写完」的窗口里读到半截 JSON（GX-5 实机验证 E1）。
+	tmp := path + ".tmp"
+	if err := os.WriteFile(tmp, b, 0o644); err != nil {
+		return err
+	}
+	return os.Rename(tmp, path)
 }
 
 func winDesc(s engine.WinSource) string {

@@ -5,7 +5,7 @@
 // 种子 → 动作序列 → 终局结果 完全可复现（同一命令多次运行结果一致）。
 // 复现：npm run e2e [种子]
 import { spawn } from "node:child_process";
-import { mkdtempSync, readFileSync, existsSync, copyFileSync, mkdirSync } from "node:fs";
+import { mkdtempSync, readFileSync, copyFileSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
@@ -163,17 +163,27 @@ try {
 
   if (!endEvent) throw new Error("一局未在步数上限内收束");
 
-  // 等 dump 落盘（终局后在服务端收尾流程里写出）
-  for (let i = 0; i < 50 && !existsSync(dumpPath); i++) await sleep(100);
-  if (!existsSync(dumpPath)) throw new Error(`未找到 dump 文件：${dumpPath}`);
-
-  const dump = JSON.parse(readFileSync(dumpPath, "utf8"));
+  // 等 dump 落盘并可解析：服务端以「临时文件 + rename」原子写出；
+  // 消费侧判据＝「可解析」而非「存在」——GX-5 E1 修复配套
+  let dump = null;
+  for (let i = 0; i < 100 && !dump; i++) {
+    try {
+      dump = JSON.parse(readFileSync(dumpPath, "utf8"));
+    } catch {
+      await sleep(100);
+    }
+  }
+  if (!dump) throw new Error(`未读到可解析的 dump：${dumpPath}`);
   if (!Array.isArray(dump.actions) || dump.actions.length === 0) throw new Error("dump.actions 为空");
   if (!Array.isArray(dump.events) || dump.events.length === 0) throw new Error("dump.events 为空");
   if (!dump.result) throw new Error("dump.result 缺失");
   if (dump.seed !== seed) throw new Error(`dump.seed 不符：${dump.seed}`);
+  if (!dump.score) throw new Error("dump.score 缺失（GX-3 计分）");
+  const deltaSum = dump.score.settlement.deltas.reduce((a, b) => a + b, 0);
+  if (deltaSum !== 0) throw new Error(`四家得失分应零和，得 ${deltaSum}`);
   const rejected = dump.actions.filter((a) => a.error).length;
   const outcome = dump.result.exhaustive ? "流局" : `座位 ${dump.result.winner} 和牌`;
+  const scoreTxt = dump.result.exhaustive ? "流局零和" : `${dump.score.best.total} 番（${dump.score.eligible ? "达起和线" : "未达起和线"}）`;
   const sameResult = Boolean(endEvent?.exhaustive) === Boolean(dump.result.exhaustive);
 
   if (process.env.GX_E2E_KEEP === "1") {
@@ -185,7 +195,7 @@ try {
   }
 
   console.log(
-    `E2E 通过：种子 ${seed}（确定性）｜动作 ${dump.actions.length} 步（其中被拒 ${rejected}）｜事件 ${dump.events.length} 条｜结果：${outcome}`,
+    `E2E 通过：种子 ${seed}（确定性）｜动作 ${dump.actions.length} 步（其中被拒 ${rejected}）｜事件 ${dump.events.length} 条｜结果：${outcome}｜计分：${scoreTxt}`,
   );
   console.log(`终局结果一致：${sameResult ? "是" : "否（客户端观察与服务端 dump 不一致，请检查）"}`);
   console.log(`dump：${dumpPath}`);
